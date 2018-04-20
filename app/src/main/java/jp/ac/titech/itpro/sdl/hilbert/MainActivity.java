@@ -11,6 +11,7 @@ public class MainActivity extends AppCompatActivity {
     private HilbertView hilbertView;
     private Button decButton, incButton;
     private final static int MAX_ORDER = 9;
+    private final static String KEY_ORDER = "MainActivity.order";
     private int order = 1;
 
     @Override
@@ -21,6 +22,10 @@ public class MainActivity extends AppCompatActivity {
         hilbertView = findViewById(R.id.hilbert_view);
         decButton = findViewById(R.id.dec_button);
         incButton = findViewById(R.id.inc_button);
+
+        if (savedInstanceState != null)
+            order = savedInstanceState.getInt(KEY_ORDER);
+
         decButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -47,6 +52,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         display();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(KEY_ORDER, order);
     }
 
     private void display() {
